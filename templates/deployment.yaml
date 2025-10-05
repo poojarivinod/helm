@@ -1,0 +1,30 @@
+# copy from k8-resources--> 16-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  # labels of deployment resource
+  labels:
+    app: nginx
+    tier: frontend
+    purpose: deployment
+spec:
+  replicas: {{ .Values.deployment.replicas }} #assume this will change. This is the place folder, use it as a variable. V should be capital letter.
+  selector:
+    matchLabels:
+      app: nginx
+      tier: frontend
+      purpose: deployment
+  # pod template
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: frontend
+        purpose: deployment
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:{{ .Values.deployment.imageVersion }} # image version changes frequently
+        ports: 
+        - containerPort: 80

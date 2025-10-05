@@ -1,0 +1,16 @@
+# copy from k8-resources--> 16-deployment.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-lb
+spec:
+  type: LoadBalancer
+  selector: # labels are used as selectors, it connects to that pod
+    app: nginx
+    tier: frontend
+    purpose: deployment
+  ports:
+  - protocol: TCP
+    port: 80 # service port
+    targetPort: 80 # target container port
+    nodePort: {{ .Values.deployment.nodePort }} # imagine this will change for practice purpose
